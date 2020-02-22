@@ -2,29 +2,34 @@
 
 class DiscountCalculatorTest
 {
-    function shouldApply_WhenValueIsAboveTheMinimum()
+    public function ShouldApply_WhenValueIsAboveTheMinimumTest()
     {
         $discountCalculator = new DiscountCalculator();
+
         $totalValue = 130;
-        $expectedValue = 110; //valor que precisa ser retornado  ($variavel - 20)
         $totalWithDiscount = $discountCalculator->apply($totalValue);
-        $this->assertEquals($expectedValue, $totalWithDiscount);
+
+        $expectedValue = 110;
+        $this->assertEquals($expectedValue, $totalWithDiscount, "O teste de desconto em caso de valor minimo maior, passou. \n");
     }
 
-    function SholdNotApply_WhenValueIsUnderTheMinimum(){
+    public function ShouldNotApply_WhenValueIsABellowTheMinimumTest()
+    {
         $discountCalculator = new DiscountCalculator();
-        $totalValue = 80;
-        $expectedValue = 80; //valor que precisa ser retornado  ($variavel sem alterações), o desconto é apenas para acima de 100
+
+        $totalValue = 90;
         $totalWithDiscount = $discountCalculator->apply($totalValue);
-        $this->assertEquals($expectedValue, $totalWithDiscount);
+
+        $expectedValue = 90;
+        $this->assertEquals($expectedValue, $totalWithDiscount, "O teste de desconto em caso de valor minimo menor, passou. \n");
     }
 
-    function assertEquals($expectedValue, $actualValue)
+    function assertEquals($expectedValue, $actualValue, $message)
     {
         if ($expectedValue !== $actualValue) {
-            $message = 'Expected :' . $expectedValue;
-            throw new Exception($message);
+            $testFailedMessage = 'Expected :' . $expectedValue .' mas obteve: '.$actualValue;
+            throw new Exception($testFailedMessage);
         }
-        echo 'Test PAssed!';
+        echo $message;
     }
 }
